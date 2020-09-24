@@ -4,7 +4,10 @@ import (
 	"errors"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/forum/models"
 )
@@ -46,4 +49,36 @@ func generateHTML(writer http.ResponseWriter, data interface{}, filenames ...str
 // Version 返回版本号.
 func Version() string {
 	return "0.1"
+}
+
+var logger *log.Logger
+
+// init 初始化时OpenFile有可能因为权限问题无法创建文件，需要手动创建并chmod读写。
+func init() {
+	file, err := os.OpenFile("logs/goforum.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	if err != nil {
+		log.Fatalln("Failed to open log file", err)
+	}
+	logger = log.New(file, "INFO ", log.Ldate|log.Ltime|log.Lshortfile)
+}
+
+func info(args ...interface{}) {
+	logger.SetPrefix("INFO ")
+	logger.Println(args...)
+}
+
+// danger 避免和 error 类型重名.
+func danger(args ...interface{}) {
+	logger.SetPrefix("ERROR ")
+	logger.Println(args...)
+}
+
+func warning(args ...interface{}) {
+	logger.SetPrefix("WARNING ")
+	logger.Println(args...)
+}
+
+func errorMessage(writer http.ResponseWriter, request *http.Request, msg string) {
+	url := []string{"/err?msg=", msg}
+	http.Redirect(writer, request, strings.Join(url, ""), 302)
 }

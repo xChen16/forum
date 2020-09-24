@@ -15,7 +15,7 @@ func PostThread(writer http.ResponseWriter, request *http.Request) {
 	} else {
 		err = request.ParseForm()
 		if err != nil {
-			fmt.Println("Cannot parse form")
+			errorMessage(writer, request, "Cannot parse form")
 		}
 		user, err := sess.User()
 		if err != nil {
