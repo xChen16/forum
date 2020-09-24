@@ -1,0 +1,14 @@
+{
+    "App": {
+        "Address": "ip地址",
+        "Static": "前台样式文件位置",
+        "Log": "错误日志位置"
+    },
+    "Db": {
+        "Driver": "数据库",
+        "Address": "数据库端口",
+        "Database": "数据库名",
+        "User": "用户名",
+        "Password": "密码"
+    }
+}
