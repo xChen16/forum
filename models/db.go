@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/forum/config"
+	// mysql driver
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -14,7 +16,10 @@ var Db *sql.DB
 
 func init() {
 	var err error
-	Db, err = sql.Open("mysql", "root:root@/forum?charset=utf8&parseTime=true")
+	config := config.LoadConfig()
+	driver := config.Db.Driver
+	source := fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8&parseTime=true", config.Db.User, config.Db.Password, config.Db.Address, config.Db.Database)
+	Db, err = sql.Open(driver, source)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -33,6 +38,7 @@ func createUUID() (uuid string) {
 	uuid = fmt.Sprintf("%x-%x-%x-%x-%x", u[0:4], u[4:6], u[6:8], u[8:10], u[10:])
 	return
 }
+
 func Encrypt(plaintext string) (cryptext string) {
 	cryptext = fmt.Sprintf("%x", sha1.Sum([]byte(plaintext)))
 	return

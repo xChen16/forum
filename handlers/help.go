@@ -53,9 +53,9 @@ func Version() string {
 
 var logger *log.Logger
 
-// init 初始化时OpenFile有可能因为权限问题无法创建文件，需要手动创建并chmod读写。
+// init 初始化时OpenFile有可能因为权限问题无法创建文件，日志放同级目录或修改系统umask或手动创建文件夹并chmod.
 func init() {
-	file, err := os.OpenFile("logs/goforum.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile("goforum.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalln("Failed to open log file", err)
 	}
