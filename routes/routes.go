@@ -73,4 +73,10 @@ var webRoutes = WebRoutes{
 		"/thread/read",
 		handlers.ReadThread,
 	},
+	{
+		"postThread",
+		"POST",
+		"/thread/post",
+		handlers.PostThread,
+	},
 }
