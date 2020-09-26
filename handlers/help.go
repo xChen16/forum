@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 
 	. "github.com/forum/config"
 	"github.com/forum/models"
@@ -43,8 +44,10 @@ func generateHTML(writer http.ResponseWriter, data interface{}, filenames ...str
 	for _, file := range filenames {
 		files = append(files, fmt.Sprintf("views/%s.html", file))
 	}
-
-	templates := template.Must(template.ParseFiles(files...))
+	funcMap := template.FuncMap{"fdate": formatDate}
+	t := template.New("layout").Funcs(funcMap)
+	templates := template.Must(t.ParseFiles(files...))
+	// templates := template.Must(template.ParseFiles(files...))
 	templates.ExecuteTemplate(writer, "layout", data)
 }
 
@@ -89,4 +92,10 @@ func warning(args ...interface{}) {
 func errorMessage(writer http.ResponseWriter, request *http.Request, msg string) {
 	url := []string{"/err?msg=", msg}
 	http.Redirect(writer, request, strings.Join(url, ""), 302)
+}
+
+// 日期格式化
+func formatDate(t time.Time) string {
+	datetime := "2006-01-02 15:04:05"
+	return t.Format(datetime)
 }
