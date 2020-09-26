@@ -22,7 +22,6 @@ go run main.go
 ```
 /forum$ cd locales/
 /forum/locales$ goi18n merge active.en.json active.zh.json
-
 ```
 
 ## 协议
