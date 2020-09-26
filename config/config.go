@@ -5,12 +5,17 @@ import (
 	"log"
 	"os"
 	"sync"
+
+	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"golang.org/x/text/language"
 )
 
 type App struct {
-	Address string
-	Static  string
-	Log     string
+	Address  string
+	Static   string
+	Log      string
+	Locale   string
+	Language string
 }
 
 type Database struct {
@@ -22,8 +27,9 @@ type Database struct {
 }
 
 type Configuration struct {
-	App App
-	Db  Database
+	App          App
+	Db           Database
+	LocaleBundle *i18n.Bundle
 }
 
 var config *Configuration
@@ -42,6 +48,12 @@ func LoadConfig() *Configuration {
 		if err != nil {
 			log.Fatalln("Cannot get configuration from file", err)
 		}
+		// 本地化初始设置
+		bundle := i18n.NewBundle(language.English)
+		bundle.RegisterUnmarshalFunc("json", json.Unmarshal)
+		bundle.MustLoadMessageFile(config.App.Locale + "/active.en.json")
+		bundle.MustLoadMessageFile(config.App.Locale + "/active." + config.App.Language + ".json")
+		config.LocaleBundle = bundle
 	})
 	return config
 }

@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/forum/models"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 // PostThread POST /thread/post.
@@ -15,7 +16,10 @@ func PostThread(writer http.ResponseWriter, request *http.Request) {
 	} else {
 		err = request.ParseForm()
 		if err != nil {
-			errorMessage(writer, request, "Cannot parse form")
+			msg := localizer.MustLocalize(&i18n.LocalizeConfig{
+				MessageID: "thread_not_found",
+			})
+			errorMessage(writer, request, msg)
 		}
 		user, err := sess.User()
 		if err != nil {

@@ -9,7 +9,9 @@ import (
 	"os"
 	"strings"
 
+	. "github.com/forum/config"
 	"github.com/forum/models"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 )
 
 // 通过Cookie判断用户是否已登录
@@ -52,9 +54,15 @@ func Version() string {
 }
 
 var logger *log.Logger
+var config *Configuration
+var localizer *i18n.Localizer
 
 // init 初始化时OpenFile有可能因为权限问题无法创建文件，日志放同级目录或修改系统umask或手动创建文件夹并chmod.
 func init() {
+	// 获取全局配置实例
+	config = LoadConfig()
+	// 获取本地化实例
+	localizer = i18n.NewLocalizer(config.LocaleBundle, config.App.Language)
 	file, err := os.OpenFile("goforum.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalln("Failed to open log file", err)

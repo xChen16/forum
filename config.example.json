@@ -2,7 +2,9 @@
     "App": {
         "Address": "ip地址",
         "Static": "前台样式文件位置",
-        "Log": "错误日志位置"
+        "Log": "错误日志位置",
+        "Locale": "locales",
+        "Language": "zh"
     },
     "Db": {
         "Driver": "数据库",
