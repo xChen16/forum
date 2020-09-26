@@ -13,3 +13,12 @@ goforum 项目地址： https://github.com/xChen16/forum
 直接运行go run main.go
 
 主页地址为：http://localhost:8080/
+
+使用goi18n把消息本地化
+
+```
+/forum$ cd locales/
+/forum/locales$ goi18n merge active.en.json active.zh.json
+
+```
+

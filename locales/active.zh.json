@@ -1,0 +1,6 @@
+{
+    "thread_not_found": {
+        "description": "该群组不存在",
+        "other": "无法获取"
+    }
+}
