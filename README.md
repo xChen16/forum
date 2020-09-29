@@ -24,6 +24,8 @@ go run main.go
 /forum/locales$ goi18n merge active.en.json active.zh.json
 ```
 
+gorilla/mux中的路由处理十分强大，但是Methods中并没有提供DELETE，所以无法实现删贴功能。
+
 ## 协议
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
