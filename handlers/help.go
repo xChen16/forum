@@ -66,7 +66,7 @@ func init() {
 	config = LoadConfig()
 	// 获取本地化实例
 	localizer = i18n.NewLocalizer(config.LocaleBundle, config.App.Language)
-	file, err := os.OpenFile("goforum.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	file, err := os.OpenFile("logs/goforum.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		log.Fatalln("Failed to open log file", err)
 	}
