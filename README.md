@@ -1,5 +1,5 @@
 # GoForum
-goforum为go语言写的一个Go Web应用
+Go Web应用
 
 goforum 项目地址： https://github.com/xChen16/forum
 
