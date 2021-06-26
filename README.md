@@ -1,7 +1,6 @@
-# GoForum
+# 
 Go Web应用
-
-goforum 项目地址： https://github.com/xChen16/forum
+项目地址： https://github.com/xChen16/forum
 
 
 ## 使用
